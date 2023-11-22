@@ -1,0 +1,34 @@
+# Ignore byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment files
+venv/
+env/
+
+# Ignore IDE settings
+.idea/
+.vscode/
+
+# Ignore distribution files
+build/
+dist/
+*.egg-info/
+
+# Ignore test files
+*.pytest_cache/
+.coverage
+htmlcov/
+
+# Ignore log files
+*.log
+
+# Ignore database files
+*.db
+*.sqlite3
+
+# Ignore secret files
+*.pem
+*.key
+*.cert
+*.env
