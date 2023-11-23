@@ -1,5 +1,6 @@
 from pathlib import Path
 import environ
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,10 +34,17 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # installed
     "rest_framework",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth.registration",
     # custom
-    'accounts',
-    'maker',
-    'routines',
+    "accounts",
+    "maker",
+    "routines",
 ]
 
 MIDDLEWARE = [
@@ -100,6 +108,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -123,3 +138,20 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+# dj-rest-auth
+REST_USE_JWT = True  # JWT 사용 여부
+JWT_AUTH_COOKIE = "my-app-auth"  # 호출할 Cookie Key 값
+JWT_AUTH_REFRESH_COOKIE = "my-refresh-token"  # Refresh Token Cookie Key 값
+
+# django-allauth
+SITE_ID = 1  # 해당 도메인 id
+ACCOUNT_UNIQUE_EMAIL = True  # User email unique 사용 여부
+ACCOUNT_EMAIL_REQUIRED = True  # User email 필수 여부
+ACCOUNT_AUTHENTICATION_METHOD = "email"  # 로그인 인증 수단
+ACCOUNT_EMAIL_VERIFICATION = "none"  # email 인증 필수 여부
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # AccessToken 유효 기간 설정
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),  # RefreshToken 유효 기간 설정
+}
