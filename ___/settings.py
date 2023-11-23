@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     "rest_framework",
     # custom
     'accounts',
-    'maker',
     'routines',
 ]
 
