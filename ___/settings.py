@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # installed
+    "django_extensions",
     "rest_framework",
     "rest_framework.authtoken",
     "dj_rest_auth",
@@ -109,6 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "accounts.exceptions.core_exception_handler",
+    "NON_FIELD_ERRORS_KEY": "error",
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
