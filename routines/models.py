@@ -18,7 +18,7 @@ class Exerciser(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.affiliation_type} - {self.level} 운동"
+        return f"[{self.id}] {self.author}의 결과"
 
 
 class Routine(models.Model):
