@@ -22,9 +22,10 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
+# OpenAI API Key
+OPENAI_API_KEY = env("OPENAI_API_KEY")
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
