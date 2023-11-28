@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "allauth",
     "allauth.account",
-    "allauth.socialaccount",
     "dj_rest_auth.registration",
+    "corsheaders",
     # custom
     "accounts",
     "routines",
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -149,3 +150,7 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # AccessToken 유효 기간 설정
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),  # RefreshToken 유효 기간 설정
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5500",
+]
