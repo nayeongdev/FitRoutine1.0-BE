@@ -8,6 +8,18 @@ class AuthorSerializer(ModelSerializer):
         fields = ["email", "username"]
 
 
+class ExerciserInfoSerializer(ModelSerializer):
+    class Meta:
+        model = Exerciser
+        fields = [
+            "goal",
+            "level",
+            "exercise_place",
+            "preferred_exercise",
+            "exercise_duration",
+        ]
+
+
 class ExerciserSerializer(ModelSerializer):
     author = AuthorSerializer(read_only=True)
 
@@ -18,6 +30,7 @@ class ExerciserSerializer(ModelSerializer):
 
 class RoutineSerializer(ModelSerializer):
     author = AuthorSerializer(read_only=True)
+    exerciser_info = ExerciserInfoSerializer(read_only=True)
 
     class Meta:
         model = Routine
