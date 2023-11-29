@@ -3,7 +3,7 @@ from rest_framework import mixins
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Exerciser, Routine
 from .serializers import ExerciserSerializer, RoutineSerializer
@@ -26,10 +26,10 @@ class ExerciserViewSet(
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     authentication_classes = [JWTAuthentication]
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+        serializer.save(author=request.user)
 
         # ChatGPT와의 상호작용
         response = openai.ChatCompletion.create(
@@ -70,3 +70,14 @@ class RoutineViewSet(ModelViewSet):
     serializer_class = RoutineSerializer
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
     authentication_classes = [JWTAuthentication]
+
+    def create(self, request):
+        exerciser_id = request.query_params.get("exerciser_id")
+        exerciser_info = Exerciser.objects.get(pk=exerciser_id)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(author=request.user, exerciser_info=exerciser_info)
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, headers=headers)
